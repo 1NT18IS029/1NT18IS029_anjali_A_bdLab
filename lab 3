@@ -1,0 +1,42 @@
+> use company
+switched to db company
+> db.customer.insertMany([
+...     {cust_id:"A123",amount:500,status:"A"},
+...     {cust_id:"A123",amount:250,status:"A"},
+...     {cust_id:"B212",amount:200,status:"A"},
+...     {cust_id:"A123",amount:300,status:"B"}
+...    ])
+{
+	"acknowledged" : true,
+	"insertedIds" : [
+		ObjectId("60703f02fed05e761ac365b7"),
+		ObjectId("60703f02fed05e761ac365b8"),
+		ObjectId("60703f02fed05e761ac365b9"),
+		ObjectId("60703f02fed05e761ac365ba")
+	]
+}
+> db.customer.mapReduce(
+... function(){emit(this.cust_id,this.amount);},
+... function(key,values){
+...     return Array.sum(values)
+...     },
+...     {
+...         query:{status:"A"},
+...         out:"order_details"
+...     }
+...  )
+{
+	"result" : "order_details",
+	"timeMillis" : 270,
+	"counts" : {
+		"input" : 3,
+		"emit" : 3,
+		"reduce" : 1,
+		"output" : 2
+	},
+	"ok" : 1
+}
+> 
+> db.order_details.find()
+{ "_id" : "A123", "value" : 750 }
+{ "_id" : "B212", "value" : 200 }
