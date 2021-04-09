@@ -1,0 +1,482 @@
+anjali@anjali:~$ mongo
+MongoDB shell version v3.6.8
+connecting to: mongodb://127.0.0.1:27017
+Implicit session: session { "id" : UUID("18976712-53c2-480d-a59f-c829a390806b") }
+MongoDB server version: 3.6.8
+Server has startup warnings: 
+2021-04-09T16:59:07.614+0530 I STORAGE  [initandlisten] 
+2021-04-09T16:59:07.614+0530 I STORAGE  [initandlisten] ** WARNING: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine
+2021-04-09T16:59:07.614+0530 I STORAGE  [initandlisten] **          See http://dochub.mongodb.org/core/prodnotes-filesystem
+2021-04-09T16:59:13.280+0530 I CONTROL  [initandlisten] 
+2021-04-09T16:59:13.280+0530 I CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+2021-04-09T16:59:13.280+0530 I CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+2021-04-09T16:59:13.280+0530 I CONTROL  [initandlisten] 
+> show dbs
+admin    0.000GB
+company  0.000GB
+config   0.000GB
+empl     0.000GB
+local    0.000GB
+> use employee
+switched to db employee
+> db.empdet.insertMany([{fname:"anjali",lname:"sharma",age:21,email:"anjali@gmail.com",phone:7338009483,experience:02},
+... {fname:"asha",lname:"madguni",age:21,email:"asha@gmail.com",phone:345679483,experience:03},
+... {fname:"naira",lname:"mehra",age:22,email:"naira.m@gmail.com",phone:7338009486,experience:05},
+... {fname:"ayesha",lname:"nomani",age:42,email:"ayesha.n@gmail.com",phone:1234567891,experience:10},
+... {fname:"zoya",lname:"faruqi",age:22,email:"zoya.f@gmail.com",phone:7338012345,experience:11},
+... {fname:"manya",lname:"jha",age:35,email:"manya.j@gmail.com",phone:1234456734,experience:12},
+... {fname:"khwab",lname:"verma",age:33,email:"khwab.v@gmail.com",phone:7338129486,experience:09},
+... {fname:"khwayish",lname:"saxena",age:30,email:"khwayish.s@gmail.com",phone:1234009486,experience:03},
+... {fname:"anahita",lname:"raghuvanshi",age:28,email:"anahita.r@gmail.com",phone:987654321,experience:04},
+... {fname:"hiya",lname:"namdeo",age:25,email:"hiya@gmail.com",phone:8431977231,experience:05}])
+{
+	"acknowledged" : true,
+	"insertedIds" : [
+		ObjectId("60703b97fed05e761ac365ac"),
+		ObjectId("60703b97fed05e761ac365ad"),
+		ObjectId("60703b97fed05e761ac365ae"),
+		ObjectId("60703b97fed05e761ac365af"),
+		ObjectId("60703b97fed05e761ac365b0"),
+		ObjectId("60703b97fed05e761ac365b1"),
+		ObjectId("60703b97fed05e761ac365b2"),
+		ObjectId("60703b97fed05e761ac365b3"),
+		ObjectId("60703b97fed05e761ac365b4"),
+		ObjectId("60703b97fed05e761ac365b5")
+	]
+}
+> db.empdet.find()
+{ "_id" : ObjectId("60703b97fed05e761ac365ac"), "fname" : "anjali", "lname" : "sharma", "age" : 21, "email" : "anjali@gmail.com", "phone" : 7338009483, "experience" : 2 }
+{ "_id" : ObjectId("60703b97fed05e761ac365ad"), "fname" : "asha", "lname" : "madguni", "age" : 21, "email" : "asha@gmail.com", "phone" : 345679483, "experience" : 3 }
+{ "_id" : ObjectId("60703b97fed05e761ac365ae"), "fname" : "naira", "lname" : "mehra", "age" : 22, "email" : "naira.m@gmail.com", "phone" : 7338009486, "experience" : 5 }
+{ "_id" : ObjectId("60703b97fed05e761ac365af"), "fname" : "ayesha", "lname" : "nomani", "age" : 42, "email" : "ayesha.n@gmail.com", "phone" : 1234567891, "experience" : 10 }
+{ "_id" : ObjectId("60703b97fed05e761ac365b0"), "fname" : "zoya", "lname" : "faruqi", "age" : 22, "email" : "zoya.f@gmail.com", "phone" : 7338012345, "experience" : 11 }
+{ "_id" : ObjectId("60703b97fed05e761ac365b1"), "fname" : "manya", "lname" : "jha", "age" : 35, "email" : "manya.j@gmail.com", "phone" : 1234456734, "experience" : 12 }
+{ "_id" : ObjectId("60703b97fed05e761ac365b2"), "fname" : "khwab", "lname" : "verma", "age" : 33, "email" : "khwab.v@gmail.com", "phone" : 7338129486, "experience" : 9 }
+{ "_id" : ObjectId("60703b97fed05e761ac365b3"), "fname" : "khwayish", "lname" : "saxena", "age" : 30, "email" : "khwayish.s@gmail.com", "phone" : 1234009486, "experience" : 3 }
+{ "_id" : ObjectId("60703b97fed05e761ac365b4"), "fname" : "anahita", "lname" : "raghuvanshi", "age" : 28, "email" : "anahita.r@gmail.com", "phone" : 987654321, "experience" : 4 }
+{ "_id" : ObjectId("60703b97fed05e761ac365b5"), "fname" : "hiya", "lname" : "namdeo", "age" : 25, "email" : "hiya@gmail.com", "phone" : 8431977231, "experience" : 5 }
+> db.createCollection("test")
+{ "ok" : 1 }
+> show collections
+empdet
+test
+> db.test.insertMany([{_id:1, dept:"1", dno:"ise"},{_id:2, dept:"2", dno:"eee"},{_id:3, dept:"3", dno:"cse"}]);
+{ "acknowledged" : true, "insertedIds" : [ 1, 2, 3 ] }
+> db.test.find({}).pretty()
+{ "_id" : 1, "dept" : "1", "dno" : "ise" }
+{ "_id" : 2, "dept" : "2", "dno" : "eee" }
+{ "_id" : 3, "dept" : "3", "dno" : "cse" }
+> 
+> db.test.drop()
+true
+> show collections
+empdet
+> db.empdet.find().pretty()
+{
+	"_id" : ObjectId("60703b97fed05e761ac365ac"),
+	"fname" : "anjali",
+	"lname" : "sharma",
+	"age" : 21,
+	"email" : "anjali@gmail.com",
+	"phone" : 7338009483,
+	"experience" : 2
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365ad"),
+	"fname" : "asha",
+	"lname" : "madguni",
+	"age" : 21,
+	"email" : "asha@gmail.com",
+	"phone" : 345679483,
+	"experience" : 3
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365ae"),
+	"fname" : "naira",
+	"lname" : "mehra",
+	"age" : 22,
+	"email" : "naira.m@gmail.com",
+	"phone" : 7338009486,
+	"experience" : 5
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365af"),
+	"fname" : "ayesha",
+	"lname" : "nomani",
+	"age" : 42,
+	"email" : "ayesha.n@gmail.com",
+	"phone" : 1234567891,
+	"experience" : 10
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365b0"),
+	"fname" : "zoya",
+	"lname" : "faruqi",
+	"age" : 22,
+	"email" : "zoya.f@gmail.com",
+	"phone" : 7338012345,
+	"experience" : 11
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365b1"),
+	"fname" : "manya",
+	"lname" : "jha",
+	"age" : 35,
+	"email" : "manya.j@gmail.com",
+	"phone" : 1234456734,
+	"experience" : 12
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365b2"),
+	"fname" : "khwab",
+	"lname" : "verma",
+	"age" : 33,
+	"email" : "khwab.v@gmail.com",
+	"phone" : 7338129486,
+	"experience" : 9
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365b3"),
+	"fname" : "khwayish",
+	"lname" : "saxena",
+	"age" : 30,
+	"email" : "khwayish.s@gmail.com",
+	"phone" : 1234009486,
+	"experience" : 3
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365b4"),
+	"fname" : "anahita",
+	"lname" : "raghuvanshi",
+	"age" : 28,
+	"email" : "anahita.r@gmail.com",
+	"phone" : 987654321,
+	"experience" : 4
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365b5"),
+	"fname" : "hiya",
+	"lname" : "namdeo",
+	"age" : 25,
+	"email" : "hiya@gmail.com",
+	"phone" : 8431977231,
+	"experience" : 5
+}
+> db.empdet.save({fname:"meera",lname:"sharma"})
+WriteResult({ "nInserted" : 1 })
+> db.empdet.find().pretty()
+{
+	"_id" : ObjectId("60703b97fed05e761ac365ac"),
+	"fname" : "anjali",
+	"lname" : "sharma",
+	"age" : 21,
+	"email" : "anjali@gmail.com",
+	"phone" : 7338009483,
+	"experience" : 2
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365ad"),
+	"fname" : "asha",
+	"lname" : "madguni",
+	"age" : 21,
+	"email" : "asha@gmail.com",
+	"phone" : 345679483,
+	"experience" : 3
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365ae"),
+	"fname" : "naira",
+	"lname" : "mehra",
+	"age" : 22,
+	"email" : "naira.m@gmail.com",
+	"phone" : 7338009486,
+	"experience" : 5
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365af"),
+	"fname" : "ayesha",
+	"lname" : "nomani",
+	"age" : 42,
+	"email" : "ayesha.n@gmail.com",
+	"phone" : 1234567891,
+	"experience" : 10
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365b0"),
+	"fname" : "zoya",
+	"lname" : "faruqi",
+	"age" : 22,
+	"email" : "zoya.f@gmail.com",
+	"phone" : 7338012345,
+	"experience" : 11
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365b1"),
+	"fname" : "manya",
+	"lname" : "jha",
+	"age" : 35,
+	"email" : "manya.j@gmail.com",
+	"phone" : 1234456734,
+	"experience" : 12
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365b2"),
+	"fname" : "khwab",
+	"lname" : "verma",
+	"age" : 33,
+	"email" : "khwab.v@gmail.com",
+	"phone" : 7338129486,
+	"experience" : 9
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365b3"),
+	"fname" : "khwayish",
+	"lname" : "saxena",
+	"age" : 30,
+	"email" : "khwayish.s@gmail.com",
+	"phone" : 1234009486,
+	"experience" : 3
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365b4"),
+	"fname" : "anahita",
+	"lname" : "raghuvanshi",
+	"age" : 28,
+	"email" : "anahita.r@gmail.com",
+	"phone" : 987654321,
+	"experience" : 4
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365b5"),
+	"fname" : "hiya",
+	"lname" : "namdeo",
+	"age" : 25,
+	"email" : "hiya@gmail.com",
+	"phone" : 8431977231,
+	"experience" : 5
+}
+{
+	"_id" : ObjectId("60703c9efed05e761ac365b6"),
+	"fname" : "meera",
+	"lname" : "sharma"
+}
+> db.empdet.insert({_id:01,fname:"noor",lname:"ahmed",age:21,email:"noor@gmail.com",phone:7334567838,experience:03})
+WriteResult({ "nInserted" : 1 })
+> db.empdet.find().pretty()
+{
+	"_id" : ObjectId("60703b97fed05e761ac365ac"),
+	"fname" : "anjali",
+	"lname" : "sharma",
+	"age" : 21,
+	"email" : "anjali@gmail.com",
+	"phone" : 7338009483,
+	"experience" : 2
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365ad"),
+	"fname" : "asha",
+	"lname" : "madguni",
+	"age" : 21,
+	"email" : "asha@gmail.com",
+	"phone" : 345679483,
+	"experience" : 3
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365ae"),
+	"fname" : "naira",
+	"lname" : "mehra",
+	"age" : 22,
+	"email" : "naira.m@gmail.com",
+	"phone" : 7338009486,
+	"experience" : 5
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365af"),
+	"fname" : "ayesha",
+	"lname" : "nomani",
+	"age" : 42,
+	"email" : "ayesha.n@gmail.com",
+	"phone" : 1234567891,
+	"experience" : 10
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365b0"),
+	"fname" : "zoya",
+	"lname" : "faruqi",
+	"age" : 22,
+	"email" : "zoya.f@gmail.com",
+	"phone" : 7338012345,
+	"experience" : 11
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365b1"),
+	"fname" : "manya",
+	"lname" : "jha",
+	"age" : 35,
+	"email" : "manya.j@gmail.com",
+	"phone" : 1234456734,
+	"experience" : 12
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365b2"),
+	"fname" : "khwab",
+	"lname" : "verma",
+	"age" : 33,
+	"email" : "khwab.v@gmail.com",
+	"phone" : 7338129486,
+	"experience" : 9
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365b3"),
+	"fname" : "khwayish",
+	"lname" : "saxena",
+	"age" : 30,
+	"email" : "khwayish.s@gmail.com",
+	"phone" : 1234009486,
+	"experience" : 3
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365b4"),
+	"fname" : "anahita",
+	"lname" : "raghuvanshi",
+	"age" : 28,
+	"email" : "anahita.r@gmail.com",
+	"phone" : 987654321,
+	"experience" : 4
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365b5"),
+	"fname" : "hiya",
+	"lname" : "namdeo",
+	"age" : 25,
+	"email" : "hiya@gmail.com",
+	"phone" : 8431977231,
+	"experience" : 5
+}
+{
+	"_id" : ObjectId("60703c9efed05e761ac365b6"),
+	"fname" : "meera",
+	"lname" : "sharma"
+}
+{
+	"_id" : 1,
+	"fname" : "noor",
+	"lname" : "ahmed",
+	"age" : 21,
+	"email" : "noor@gmail.com",
+	"phone" : 7334567838,
+	"experience" : 3
+}
+> db.empdet.save({_id:01, lname:"dixit"})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.empdet.find().pretty()
+{
+	"_id" : ObjectId("60703b97fed05e761ac365ac"),
+	"fname" : "anjali",
+	"lname" : "sharma",
+	"age" : 21,
+	"email" : "anjali@gmail.com",
+	"phone" : 7338009483,
+	"experience" : 2
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365ad"),
+	"fname" : "asha",
+	"lname" : "madguni",
+	"age" : 21,
+	"email" : "asha@gmail.com",
+	"phone" : 345679483,
+	"experience" : 3
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365ae"),
+	"fname" : "naira",
+	"lname" : "mehra",
+	"age" : 22,
+	"email" : "naira.m@gmail.com",
+	"phone" : 7338009486,
+	"experience" : 5
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365af"),
+	"fname" : "ayesha",
+	"lname" : "nomani",
+	"age" : 42,
+	"email" : "ayesha.n@gmail.com",
+	"phone" : 1234567891,
+	"experience" : 10
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365b0"),
+	"fname" : "zoya",
+	"lname" : "faruqi",
+	"age" : 22,
+	"email" : "zoya.f@gmail.com",
+	"phone" : 7338012345,
+	"experience" : 11
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365b1"),
+	"fname" : "manya",
+	"lname" : "jha",
+	"age" : 35,
+	"email" : "manya.j@gmail.com",
+	"phone" : 1234456734,
+	"experience" : 12
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365b2"),
+	"fname" : "khwab",
+	"lname" : "verma",
+	"age" : 33,
+	"email" : "khwab.v@gmail.com",
+	"phone" : 7338129486,
+	"experience" : 9
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365b3"),
+	"fname" : "khwayish",
+	"lname" : "saxena",
+	"age" : 30,
+	"email" : "khwayish.s@gmail.com",
+	"phone" : 1234009486,
+	"experience" : 3
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365b4"),
+	"fname" : "anahita",
+	"lname" : "raghuvanshi",
+	"age" : 28,
+	"email" : "anahita.r@gmail.com",
+	"phone" : 987654321,
+	"experience" : 4
+}
+{
+	"_id" : ObjectId("60703b97fed05e761ac365b5"),
+	"fname" : "hiya",
+	"lname" : "namdeo",
+	"age" : 25,
+	"email" : "hiya@gmail.com",
+	"phone" : 8431977231,
+	"experience" : 5
+}
+{
+	"_id" : ObjectId("60703c9efed05e761ac365b6"),
+	"fname" : "meera",
+	"lname" : "sharma"
+}
+{ "_id" : 1, "lname" : "dixit" }
+>  db.test.find({fname:"anjali"})
+> db.test.find({fname:"anahita"})
+> db.empdet.find({fname:"anjali"})
+{ "_id" : ObjectId("60703b97fed05e761ac365ac"), "fname" : "anjali", "lname" : "sharma", "age" : 21, "email" : "anjali@gmail.com", "phone" : 7338009483, "experience" : 2 }
+> db.empdet.findOne()
+{
+	"_id" : ObjectId("60703b97fed05e761ac365ac"),
+	"fname" : "anjali",
+	"lname" : "sharma",
+	"age" : 21,
+	"email" : "anjali@gmail.com",
+	"phone" : 7338009483,
+	"experience" : 2
+}
