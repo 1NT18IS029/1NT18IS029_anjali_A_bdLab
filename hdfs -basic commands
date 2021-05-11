@@ -1,0 +1,123 @@
+hdoop@ubuntu:~$ su - hdoop
+Password: 
+su: Authentication failure
+hdoop@ubuntu:~$ su - hdoop
+Password: 
+hdoop@ubuntu:~$ pwd
+/home/hdoop
+hdoop@ubuntu:~$ ls
+apache-hive-3.1.2-bin  eclipse-workspace    hs_err_pid29507.log  snap
+Desktop                examples.desktop     hs_err_pid32715.log  Templates
+dfsdata                hadoop-3.2.1         Music                tmpdata
+Documents              hs_err_pid21913.log  Pictures             Videos
+Downloads              hs_err_pid29299.log  Public
+hdoop@ubuntu:~$ cd hadoop-3.2.1/sbin/
+hdoop@ubuntu:~/hadoop-3.2.1/sbin$ ./start-all.sh
+WARNING: Attempting to start all Apache Hadoop daemons as hdoop in 10 seconds.
+WARNING: This is not a recommended production deployment configuration.
+WARNING: Use CTRL-C to abort.
+Starting namenodes on [localhost]
+localhost: namenode is running as process 19027.  Stop it first.
+Starting datanodes
+localhost: datanode is running as process 19188.  Stop it first.
+Starting secondary namenodes [ubuntu]
+ubuntu: secondarynamenode is running as process 19409.  Stop it first.
+Starting resourcemanager
+resourcemanager is running as process 19703.  Stop it first.
+Starting nodemanagers
+localhost: nodemanager is running as process 19871.  Stop it first.
+hdoop@ubuntu:~/hadoop-3.2.1/sbin$ jps
+19409 SecondaryNameNode
+19027 NameNode
+19188 DataNode
+19703 ResourceManager
+23288 Jps
+19871 NodeManager
+hdoop@ubuntu:~/hadoop-3.2.1/sbin$ cd ~
+hdoop@ubuntu:~$ hadoop fs -mkdir -p /user/hdoop
+hdoop@ubuntu:~$ hadoop fs -ls
+hdoop@ubuntu:~$ hadoop fs -mkdir /user/hdoop/anjali
+hdoop@ubuntu:~$ hadoop fs -ls
+Found 1 items
+drwxr-xr-x   - hdoop supergroup          0 2021-05-11 03:07 anjali
+hdoop@ubuntu:~$ hadoop fs -touchz /user/hdoop/anjali/file1.txt
+hdoop@ubuntu:~$ hadoop fs -touchz /user/hdoop/anjali/file2.txt
+hdoop@ubuntu:~$ hadoop fs -ls /user/hdoop/anjali
+Found 2 items
+-rw-r--r--   1 hdoop supergroup          0 2021-05-11 03:13 /user/hdoop/anjali/file1.txt
+-rw-r--r--   1 hdoop supergroup          0 2021-05-11 03:13 /user/hdoop/anjali/file2.txt
+hdoop@ubuntu:~$ hadoop fs -mkdir /user/hdoop/1nt18is029
+hdoop@ubuntu:~$ hadoop fs -ls
+Found 2 items
+drwxr-xr-x   - hdoop supergroup          0 2021-05-11 03:17 1nt18is029
+drwxr-xr-x   - hdoop supergroup          0 2021-05-11 03:13 anjali
+hdoop@ubuntu:~$ hadoop fs -mv /user/hdoop/1nt18is029 /user/hdoop/anjali/
+hdoop@ubuntu:~$ hadoop fs -ls /user/hdoop/anjali
+Found 3 items
+drwxr-xr-x   - hdoop supergroup          0 2021-05-11 03:17 /user/hdoop/anjali/1nt18is029
+-rw-r--r--   1 hdoop supergroup          0 2021-05-11 03:13 /user/hdoop/anjali/file1.txt
+-rw-r--r--   1 hdoop supergroup          0 2021-05-11 03:13 /user/hdoop/anjali/file2.txt
+hdoop@ubuntu:~$ gedit anjali_1nt18is029.txt
+hdoop@ubuntu:~$ hadoop fs -copyFromLocal anjali_1nt18is029.txt /user/hdoop/anjali/1nt18is029/
+2021-05-11 03:23:26,369 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+2021-05-11 03:24:16,249 WARN hdfs.DataStreamer: Slow waitForAckedSeqno took 51369ms (threshold=30000ms). File being written: /user/hdoop/anjali/1nt18is029/anjali_1nt18is029.txt._COPYING_, block: BP-1899556892-127.0.1.1-1620722885460:blk_1073741825_1001, Write pipeline datanodes: [DatanodeInfoWithStorage[127.0.0.1:9866,DS-576fbf40-eb03-47d9-930e-e6f7ea5c8f3e,DISK]].
+hdoop@ubuntu:~$ hadoop fs -ls /user/hdoop/anjali/1nt18is029/
+Found 1 items
+-rw-r--r--   1 hdoop supergroup         45 2021-05-11 03:24 /user/hdoop/anjali/1nt18is029/anjali_1nt18is029.txt
+hdoop@ubuntu:~$ hadoop fs -cat /user/hdoop/anjali/1nt18is029/anjali_1nt18is029.txt
+2021-05-11 03:25:33,036 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+Syntax to list ls command is hadoop fs –ls
+hdoop@ubuntu:~$ hadoop fs -touchz /user/hdoop/empty.txt
+hdoop@ubuntu:~$ hadoop fs -ls /user/hdoop/
+Found 2 items
+drwxr-xr-x   - hdoop supergroup          0 2021-05-11 03:18 /user/hdoop/anjali
+-rw-r--r--   1 hdoop supergroup          0 2021-05-11 03:28 /user/hdoop/empty.txt
+hdoop@ubuntu:~$ hadoop fs -copyToLocal /user/hdoop/empty.txt
+hdoop@ubuntu:~$ hadoop fs -ls
+Found 2 items
+drwxr-xr-x   - hdoop supergroup          0 2021-05-11 03:18 anjali
+-rw-r--r--   1 hdoop supergroup          0 2021-05-11 03:28 empty.txt
+hdoop@ubuntu:~$ ls
+anjali_1nt18is029.txt  Desktop  Documents  eclipse-workspace  examples.desktop  hs_err_pid21913.log  hs_err_pid29507.log  Music     Public  Templates  Videos
+apache-hive-3.1.2-bin  dfsdata  Downloads  empty.txt          hadoop-3.2.1      hs_err_pid29299.log  hs_err_pid32715.log  Pictures  snap    tmpdata
+hdoop@ubuntu:~$ hadoop fs -moveFromLocal new.txt /user/hdoop/new.txt
+moveFromLocal: `new.txt': No such file or directory
+hdoop@ubuntu:~$ gedit new.txt
+hdoop@ubuntu:~$ hadoop fs -moveFromLocal new.txt /user/hdoop/new.txt
+2021-05-11 03:33:52,305 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+hdoop@ubuntu:~$ hadoop fs -ls
+Found 3 items
+drwxr-xr-x   - hdoop supergroup          0 2021-05-11 03:18 anjali
+-rw-r--r--   1 hdoop supergroup          0 2021-05-11 03:28 empty.txt
+-rw-r--r--   1 hdoop supergroup         15 2021-05-11 03:33 new.txt
+hdoop@ubuntu:~$ hadoop fs -cp /user/hdoop/anjali/file1.txt /user/hdoop/file.txt
+hdoop@ubuntu:~$ hadoop fs -ls
+Found 4 items
+drwxr-xr-x   - hdoop supergroup          0 2021-05-11 03:18 anjali
+-rw-r--r--   1 hdoop supergroup          0 2021-05-11 03:28 empty.txt
+-rw-r--r--   1 hdoop supergroup          0 2021-05-11 03:37 file.txt
+-rw-r--r--   1 hdoop supergroup         15 2021-05-11 03:33 new.txt
+hdoop@ubuntu:~$ hadoop fs -ls /user/hdoop/anjali
+Found 3 items
+drwxr-xr-x   - hdoop supergroup          0 2021-05-11 03:24 /user/hdoop/anjali/1nt18is029
+-rw-r--r--   1 hdoop supergroup          0 2021-05-11 03:13 /user/hdoop/anjali/file1.txt
+-rw-r--r--   1 hdoop supergroup          0 2021-05-11 03:13 /user/hdoop/anjali/file2.txt
+hdoop@ubuntu:~$ hadoop fs -du -s /user/hdoop/anjali/1nt18is029
+45  45  /user/hdoop/anjali/1nt18is029
+hdoop@ubuntu:~$ hadoop fs -du -s /user/hdoop/anjali/file1.txt
+0  0  /user/hdoop/anjali/file1.txt
+hdoop@ubuntu:~$ hadoop fs -du -s /user/hdoop/anjali/file2.txt
+0  0  /user/hdoop/anjali/file2.txt
+hdoop@ubuntu:~$ hadoop fs -ls /user/hdoop/anjali/1nt18is029/
+Found 1 items
+-rw-r--r--   1 hdoop supergroup         45 2021-05-11 03:24 /user/hdoop/anjali/1nt18is029/anjali_1nt18is029.txt
+hdoop@ubuntu:~$ hadoop fs -du -s /user/hdoop/anjali/1nt18is029/anjali_1nt18is029.txt
+45  45  /user/hdoop/anjali/1nt18is029/anjali_1nt18is029.txt
+hdoop@ubuntu:~$ hadoop fs -stat /user/hdoop/anjali
+2021-05-11 10:18:38
+hdoop@ubuntu:~$ hadoop fs -stat /user/hdoop/anjali/1nt18is029
+2021-05-11 10:24:16
+hdoop@ubuntu:~$ gedit f1.txt
+hdoop@ubuntu:~$ gedit f2.txt
+hdoop@ubuntu:~$ hadoop fs -appendToFile f1.txt f2.txt
+2021-05-11 03:51:47,379 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
